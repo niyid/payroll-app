@@ -1,0 +1,41 @@
+<resources>
+
+    <string name="title_activity">I am Alive Pension</string>
+    <string name="title_activity_login">I am Alive Pension Login</string>
+    <string name="title_activity_register">I am Alive Registration</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_full_name">LASTNAME FirstName MI</string>
+    <string name="prompt_pin">Pension Number</string>
+    <string name="prompt_paymentcode">Payment Code</string>
+    <string name="prompt_cellphone">Cellphone</string>
+    <string name="prompt_homephone">Home Phone</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_title">Title</string>
+    <string name="prompt_bank">Bank</string>
+    <string name="prompt_birthday">Birthday</string>
+    <string name="prompt_bank_account">Bank Account Number</string>
+    <string name="prompt_passphrase">Passphrase</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_confirm">Confirm password</string>
+    <string name="prompt_gender_female">Female?</string>
+    <string name="action_next">Next</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_mismatch_password">Password and confirmation don\'t match</string>
+    <string name="error_invalid_person_name">This is not a valid name for a person</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_user_disabled">This user has been disabled</string>
+    <string name="error_user_exists">This email address is already registered</string>
+    <string name="error_no_such_user">This user does not exist</string>
+    <string name="error_field_required">This field is required</string>
+	<string name="error_unknown">Unknown error; contact administrator.</string>
+	
+	<string-array name="gender_list">
+		<item>male</item>
+		<item>female</item>
+	</string-array>	
+</resources>

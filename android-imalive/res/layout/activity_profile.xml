@@ -1,0 +1,118 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.vasworks.imalive.android.RegisterActivity" >
+
+	    <ProgressBar
+	        android:id="@+id/register_progress"
+	        style="?android:attr/progressBarStyleLarge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="8dp"
+	        android:visibility="gone" />
+	
+	    <LinearLayout
+	        android:id="@+id/register_form"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+	        <AutoCompleteTextView
+	            android:id="@+id/full_name"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:hint="@string/prompt_full_name"
+	            android:inputType="textPersonName"
+	            android:maxLines="1"
+	            android:singleLine="true" />
+	        
+	        <AutoCompleteTextView
+	            android:id="@+id/cellphone"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:hint="@string/prompt_cellphone"
+	            android:inputType="text|phone"
+	            android:maxLength="15"
+	            android:maxLines="1"
+	            android:singleLine="true" />
+	        
+	        <AutoCompleteTextView
+	            android:id="@+id/homephone"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:hint="@string/prompt_homephone"
+	            android:inputType="text|phone"
+	            android:maxLength="15"
+	            android:maxLines="1"
+	            android:singleLine="true" />
+	        
+	        <EditText
+	            android:id="@+id/pension_code"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:hint="@string/prompt_pin"
+	            android:inputType="text"
+	            android:maxLines="1"
+	            android:singleLine="true" />
+	
+	        <EditText
+	            android:id="@+id/bank_account"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:hint="@string/prompt_bank_account"
+	            android:inputType="text|number"
+	            android:maxLines="1"
+	            android:maxLength="10"
+	            android:singleLine="true" />
+	        
+			<Spinner
+			    android:id="@+id/title"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:hint="@string/prompt_title" />
+	        
+			<Spinner
+			    android:id="@+id/bank"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:hint="@string/prompt_bank" />
+			   
+			<Spinner
+			    android:id="@+id/gender"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:hint="@string/prompt_gender_female"
+				android:drawSelectorOnTop="true"
+			    android:entries="@array/gender_list" />           
+	  
+			<ListView
+			    android:id="@+id/disabilities"
+			    android:layout_width="match_parent"
+			    android:layout_height="100dp"
+			    android:choiceMode="multipleChoice"
+			    android:fadeScrollbars="false" />
+	        
+	        <EditText
+	            android:id="@+id/birthday"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text|date"
+	            android:hint="@string/prompt_birthday" />
+	           
+	        <Button
+	            android:id="@+id/save_button"
+	            style="?android:textAppearanceSmall"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="16dp"
+	            android:text="@string/action_save"
+	            android:textStyle="bold" />
+	    </LinearLayout>
+
+</LinearLayout>

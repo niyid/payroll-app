@@ -1,0 +1,173 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="top"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="${relativePackage}.${activityClass}" >
+    
+    <LinearLayout
+    android:id="@+id/unauthenticated"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+		        					
+	    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	           
+	       <ImageView
+				android:id="@+id/login"
+		 	    android:layout_weight="50"
+			    android:layout_width="0dp"
+		        android:layout_height="144.0dp"
+		        android:gravity="center"
+		        android:layout_margin="15.0dp"
+		        android:contentDescription="@string/content_description"
+				android:scaleType="center"
+				android:src="@drawable/login"
+				android:onClick="loginPrompt" />
+	        		
+			<ImageView
+				android:id="@+id/enroll"
+		 	    android:layout_weight="50"
+			    android:layout_width="0dp"
+		        android:layout_height="144.0dp"
+		        android:gravity="center"
+		        android:layout_margin="15.0dp"
+		        android:contentDescription="@string/content_description"
+				android:scaleType="center"
+				android:src="@drawable/enroll"
+				android:onClick="enroll" />
+	   
+	    </LinearLayout>
+		        					
+<!-- 	    <LinearLayout -->
+<!-- 	    android:layout_width="fill_parent" -->
+<!-- 	    android:layout_height="wrap_content" -->
+<!-- 	    android:orientation="horizontal"> -->
+	           
+<!-- 	       <ImageView -->
+<!-- 				android:id="@+id/login_voice" -->
+<!-- 		 	    android:layout_weight="50" -->
+<!-- 			    android:layout_width="0dp" -->
+<!-- 		        android:layout_height="144.0dp" -->
+<!-- 		        android:gravity="center" -->
+<!-- 		        android:layout_margin="15.0dp" -->
+<!-- 		        android:contentDescription="@string/content_description" -->
+<!-- 				android:scaleType="center" -->
+<!-- 				android:src="@drawable/voice_login" -->
+<!-- 				android:onClick="loginVoicePrompt" /> -->
+	   
+<!-- 	    </LinearLayout> -->
+	    	    
+	</LinearLayout>
+     
+    <LinearLayout
+    android:id="@+id/authenticated"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+			
+	    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	
+	        <ImageView
+				android:id="@+id/payroll"
+		 	    android:layout_weight="50"
+			    android:layout_width="0dp"
+		        android:layout_height="144.0dp"
+		        android:gravity="center"
+		        android:layout_margin="15.0dp"
+		        android:contentDescription="@string/content_description"
+				android:scaleType="center"
+				android:src="@drawable/payroll"
+				android:onClick="viewPayslips" />
+			
+			<ImageView
+				android:id="@+id/ddebit"
+		 	    android:layout_weight="50"
+			    android:layout_width="0dp"
+		        android:layout_height="144.0dp"
+		        android:gravity="center"
+		        android:layout_margin="15.0dp"
+		        android:contentDescription="@string/content_description"
+				android:scaleType="center"
+				android:src="@drawable/ddebit"
+				android:onClick="ddebit" />
+			
+		</LinearLayout>
+	    
+	    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	
+	        <ImageView
+				android:id="@+id/approval"
+		 	    android:layout_weight="50"
+			    android:layout_width="0dp"
+		        android:layout_height="144.0dp"
+		        android:gravity="center"
+		        android:layout_margin="15.0dp"
+		        android:contentDescription="@string/content_description"
+				android:scaleType="center"
+				android:src="@drawable/approve"
+				android:onClick="approvalPrompt" />
+			
+			<ImageView
+				android:id="@+id/exit"
+		 	    android:layout_weight="50"
+			    android:layout_width="0dp"
+		        android:layout_height="144.0dp"
+		        android:gravity="center"
+		        android:layout_margin="15.0dp"
+		        android:contentDescription="@string/content_description"
+				android:scaleType="center"
+				android:src="@drawable/logout"
+				android:onClick="logout" />
+			
+		</LinearLayout>
+	    
+	    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	
+	        <ImageView
+				android:id="@+id/profile"
+		 	    android:layout_weight="50"
+			    android:layout_width="0dp"
+		        android:layout_height="144.0dp"
+		        android:gravity="center"
+		        android:layout_margin="15.0dp"
+		        android:contentDescription="@string/content_description"
+				android:scaleType="center"
+				android:src="@drawable/profile"
+				android:onClick="profile" />
+			
+			<ImageView
+				android:id="@+id/settings"
+		 	    android:layout_weight="50"
+			    android:layout_width="0dp"
+		        android:layout_height="144.0dp"
+		        android:gravity="center"
+		        android:layout_margin="15.0dp"
+		        android:contentDescription="@string/content_description"
+				android:scaleType="center"
+				android:src="@drawable/settings"
+				android:onClick="settings" />
+			
+		</LinearLayout>
+	    
+	</LinearLayout>   
+
+</LinearLayout>
+
