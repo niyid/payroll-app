@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="20dip" >
+
+    <ImageView
+        android:id="@+id/record_icon"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:src="@drawable/audio_rec"
+        android:contentDescription="@string/content_description" />
+        
+    <EditText
+        android:id="@+id/passphrase"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_passphrase"
+        android:inputType="text|number"
+        android:maxLines="1"
+        android:singleLine="true" />
+    
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_recording"
+        android:onClick="startVoice" />
+        
+    <TextView
+        android:id="@+id/helpText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+	    android:text="@string/record_help"
+	    android:textColor="@android:color/white"
+	    android:textSize="20.0dp"
+	    android:textStyle="bold"
+	    android:typeface="monospace"
+	    android:maxLines="20"
+		android:scrollbars="vertical" />		
+    
+</LinearLayout>

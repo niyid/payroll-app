@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="content_description">image/png</string>
+    <string name="ok">OK</string>
+    <string name="login">Login</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="title_activity_ddebit">Direct Debit</string>
+    <string name="title_activity_ddebit_instruction_list">Direct Debit Instruction List</string>
+    <string name="title_activity_ddebit_recipient_list">Direct Debit Recipient List</string>
+    <string name="title_activity_ddebit_instruction_add">New Direct Debit Instruction</string>
+    <string name="title_activity_ddebit_recipient_add">New Direct Debit Recipient</string>
+    <string name="title_activity_list">Activities</string>
+    <string name="title_activity_detail">Activity Detail</string>
+	<string name="error_unknown">Unknown error; contact administrator.</string>
+	<string name="action_save">Save</string>
+	<string name="action_next">Next</string>
+	<string name="prompt_pin">PIN</string>
+	<string name="prompt_narration">Narration</string>
+	<string name="prompt_amount">Amount</string>
+	<string name="prompt_recipient">Recipient</string>
+	<string name="prompt_service">Service</string>
+	<string name="prompt_calendar">Calendar</string>
+	<string name="prompt_recurrent">Recurrent</string>
+	<string name="prompt_server">Server Location</string>
+	<string name="error_no_such_user">This user does not exist</string>
+	<string name="start_recording">Record</string>
+	<string name="stop_recording">Stop</string>
+	<string name="welcome_title">Chams \'I-Am-Alive\'</string>
+	<string name="welcome">
+	    Welcome to Chams I-am-Alive application.
+	    \n\n
+		Chams I am Alive Mobile Application is a unique app
+		for solving the problem of proof of Life thereby
+		eradicating the challenge of physical verification and
+		identification. This solution make use of facial
+		identification as a primary authentication mechanism
+		with voice as secondary mechanism
+	    \n\n
+		The application can be use by:
+	    \n\n
+		1. Pension Administrators
+		\n
+		2. Online Examiners and lots more	
+	</string>
+	<string name="server_title">Connect to Server in: </string>
+	<string name="record_help">
+	    \n
+	    1. Enter your chosen passphrase.\n\n
+	    2. Press the \'Record\' button.\n\n
+	    3. Recite each character of your passphrase as they are displayed.\n\n
+	</string>
+	<string-array name="server_list">
+		<item>Cloud</item>
+		<item>Local</item>
+	</string-array>	
+    <string name="about">About</string>
+    <string name="checkUpdate">Check for update</string>
+    <string name="intro">OpenCV library is used by other applications for image enhancement, panorama stitching, object detection, recognition and tracking and so on. OpenCV Manager provides the best version of the OpenCV for your hardware. See opencv.org for details.</string>
+
+    <string name="grayscale">1. Grayscale</string>
+    <string name="crop">Crop</string>
+    <string name="eyeAlignment">2. Eye Alignment</string>
+    <string name="gammaCorrection">1. Gamma Correction</string>
+    <string name="doG">1. Difference of Gaussian</string>
+    <string name="masking">2. Masking</string>
+    <string name="lbp">3. Local Binary Pattern</string>
+    <string name="histogrammEqualization">1. Histogramm Equalization</string>
+    <string name="resize">1. Resize</string>
+
+    <string name="eigenfaces">Eigenfaces with NN</string>
+    <string name="imageReshaping">Image Reshaping with SVM</string>
+    <string name="tensorflow">TensorFlow with SVM or KNN</string>
+    <string name="caffe">Caffe with SVM or KNN</string>
+
+    <string name="knn">K Nearest Neighbor</string>
+    <string name="svm">Support Vector Machine</string>
+
+    <string name="modelFileCaffe">VGG_FACE_deploy.prototxt</string>
+    <string name="weightsFileCaffe">VGG_FACE.caffemodel</string>
+    <string name="outputLayerCaffe">fc7</string>
+    <string name="meanValuesCaffe">104, 117, 123</string>
+
+    <string name="gamma">0.2</string>
+    <string name="sigmas">0.25, 4</string>
+
+    <string name="haarcascade_default">haarcascade_frontalface_default</string>
+    <string name="haarcascade_alt">haarcascade_frontalface_alt</string>
+    <string name="haarcascade_alt2">haarcascade_frontalface_alt2</string>
+    <string name="lbpcascade">lbpcascade_frontalface</string>
+    <string name="classifier_350kids">02_Classifier_350kids</string>
+    <string name="classifier_200adults_350kids">01_Classifier_200adults_350kids</string>
+
+    <string name="haarcascade_eye">haarcascade_eye</string>
+    <string name="haarcascade_lefteye">haarcascade_lefteye_2splits</string>
+    <string name="haarcascade_righteye">haarcascade_righteye_2splits</string>			
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="group_pension_administrator" model="res.groups">
+            <field name="name">Pension Administrator</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="comment">run the pension and be able to pull reports</field>
+        </record>
+        <record id="group_pension_supervisor" model="res.groups">
+            <field name="name">Pension Supervisor</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="comment">Supervises agents</field>
+        </record>
+        <record id="group_pension_agent" model="res.groups">
+            <field name="name">Pension Agent</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="comment">Perform actions on behalf of pensioners and handle issues</field>
+        </record>
+    </data>
+</odoo>

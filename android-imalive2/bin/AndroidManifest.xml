@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vasworks.imalive.android"
+    android:installLocation="auto"
+    android:versionCode="0"
+    android:versionName="0.2.0 Apha">
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" />
+    <uses-feature android:name="android.hardware.sensor.light" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.HARDWARE_TEST"/>
+    <uses-permission android:name="android.permission.FACTORY_TEST"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.DELETE_CACHE_FILES"/>
+    <uses-permission android:name="android.permission.READ_OWNER_DATA"/>
+    <uses-permission android:name="android.permission.CLEAR_APP_USER_DATA"/>
+    <uses-permission android:name="android.permission.DELETE_CACHE_FILES"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.HARDWARE_TEST"/>
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<uses-permission android:name="android.permission.FLASHLIGHT" />
+    
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="25" />
+
+    <application
+    	android:name="com.vasworks.imalive.android.MainApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/welcome2"
+        android:label="I am Alive"
+        android:theme="@style/Theme.AppCompat">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="face" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="@string/title_activity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LifeProofActivity"
+            android:icon="@drawable/face_bio"
+            android:label="Face Tracker"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="Login/Register"
+            android:parentActivityName=".WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.WelcomeActivity" />
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="Update Profile"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".SettingActivity"
+            android:label="Update Settings"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".VoiceRecorderActivity"
+            android:label="Record Voice"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".FacialLoginActivity"
+            android:label="Facial Login"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Login2Activity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".DirectDebitActivity"
+            android:label="@string/title_activity_ddebit"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".EnrollActivity"
+            android:label="Enroll"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.RegisterActivity" />
+        </activity>
+        <activity
+            android:name=".PayslipDetailActivity"
+            android:label="Payslip Details"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.MainActivity" />
+        </activity>
+        <activity
+            android:name=".DdInstructionAddActivity"
+            android:label="@string/title_activity_ddebit_instruction_add"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.DirectDebitActivity" />
+        </activity>
+        <activity
+            android:name=".DdInstructionListActivity"
+            android:label="@string/title_activity_ddebit_instruction_list"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.DirectDebitActivity" />
+        </activity>
+        <activity
+            android:name=".DdRecipientAddActivity"
+            android:label="@string/title_activity_ddebit_recipient_add"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.DirectDebitActivity" />
+        </activity>
+        <activity
+            android:name=".DdRecipientListActivity"
+            android:label="@string/title_activity_ddebit_recipient_list"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" 
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vasworks.imalive.android.DirectDebitActivity" />
+        </activity>
+<!-- 		<activity android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:launchMode="singleInstance" android:name="org.acra.dialog.CrashReportDialog" android:theme="@android:style/Theme.Dialog"/> -->
+<!--         <service android:exported="false" android:name="org.acra.sender.SenderService" android:process=":acra"/>         -->
+    </application>
+
+</manifest>

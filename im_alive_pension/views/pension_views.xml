@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem name="Pension"
+            id="menu_hr_root"
+            groups="im_alive_pension.group_pension_administrator,im_alive_pension.group_pension_supervisor,im_alive_pension.group_pension_agent"
+            icon="fa-user"
+            web_icon="hr,static/description/icon.png"
+            sequence="75"/>
+        <menuitem id="menu_hr_main" parent="menu_hr_root" name="Pension Services" sequence="0"/>    
+        <!-- Employee View -->
+        <record id="im_alive_pensioner_view_form" model="ir.ui.view">
+            <field name="name">imalive.pensioner.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='public']" position="after">
+                    <page string="Transaction History">
+                        <field name="trxs" widget="one2many_list" readonly="1">
+                            <tree string="Transaction History">
+                                <field name="create_date"/>
+                                <field name="trx_type"/>
+                                <field name="amount"/>
+                                <field name="name"/>
+                            </tree>
+                        </field>                        
+                    </page>
+                    <page string="Direct Debit History">
+                        <field name="dds" widget="one2many_list" readonly="1">
+                            <tree string="Direct Debit Instructions">
+                                <field name="create_date"/>
+                                <field name="recurrent"/>
+                                <field name="amount"/>
+                                <field name="name"/>
+                            </tree>
+                        </field>                        
+                    </page>
+                    <page string="Extended Details">
+                        <group>
+                            <field name="sinid"/>
+                            <field name="identification_id"/>
+                            <field name="hire_date"/>
+                            <field name="retirement_date"/>
+                            <field name="bank_account_no"/>
+                            <field name="bank_id"/>
+                            <field name="passphrase"/>
+                        </group>
+                    </page>
+                    <page string="Disabilities">
+                        <field name="disabilities" widget="many2many_list" readonly="1">
+                            <tree string="Disabilities">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="imalive_pension_payment_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.payment.search</field>
+            <field name="model">imalive.pension.payment</field>
+            <field name="arch" type="xml">
+                <search string="Payment Instructions">
+                    <field name="name"/>
+                    <field name="calendar_id"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+                                       
+        <record id="open_imalive_pension_payment_item" model="ir.actions.act_window">
+            <field name="name">Payment Instruction Items</field>
+            <field name="res_model">imalive.pension.payment.item</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_payment_item_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.payment.item.tree</field>
+            <field name="model">imalive.pension.payment.item</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Instruction Items">
+                    <field name="pensioner_id"/>
+                    <field name="name"/>
+                    <field name="amount"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+                          
+        <menuitem
+            id="menu_imalive_pension_payment_item"
+            action="open_imalive_pension_payment_item"
+            parent="hr.menu_hr_main"
+            sequence="140" />
+        
+        <record id="open_imalive_pension_payment" model="ir.actions.act_window">
+            <field name="name">Payment Instruction</field>
+            <field name="res_model">imalive.pension.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_payment_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.payment.tree</field>
+            <field name="model">imalive.pension.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Instruction">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="date"/>
+                    <field name="calendar_id"/>
+                </tree>
+            </field>
+        </record>
+                                  
+        <record id="action_imalive_pension_payment_tree" model="ir.actions.act_window">
+            <field name="name">Payment Instruction</field>
+            <field name="res_model">imalive.pension.payment</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="imalive_pension_payment_tree"/>
+            <field name="search_view_id" ref="imalive_pension_payment_filter"/>
+        </record>
+        
+        <record id="pension_payment_form_view" model="ir.ui.view">
+            <field name="name">imalive.pension.payment.form</field>
+            <field name="model">imalive.pension.payment</field>
+            <field name="arch" type="xml">
+                <form string="Payment Instruction" version="10.0">
+                    <sheet>
+                        <header>
+                            <button name="close" type="object" states="approved" string="Close" class="oe_highlight"/>
+                            <button name="payment_signal_confirm" type="workflow" states="draft" string="Confirm" class="oe_highlight"/>
+                            <button name="payment_signal_cancel" type="workflow" states="confirm,pending" string="Cancel" class="oe_highlight"/>
+                            <field name="state" widget="statusbar"/>
+                        </header>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <field name="date"/>
+                            <field name="upload_file"/>
+                            <field name="calendar_id"/>
+                            <field name="notify_emails"/>
+                        </group>
+                        <notebook>
+                            <page string="Payment Items">
+                                <field name="payment_item_ids" widget="one2many_list" readonly="1">
+                                    <tree>
+                                        <field name="pensioner_id"/>
+                                        <field name="name"/>
+                                        <field name="amount"/>
+                                        <field name="payment_code"/>
+                                        <field name="active"/>
+                                    </tree>                                  
+                                </field>
+                            </page>
+                        </notebook>                    
+                    </sheet>
+                </form>
+            </field>
+        </record>
+                
+        <menuitem
+            id="menu_imalive_pension_payment"
+            action="open_imalive_pension_payment"
+            parent="hr.menu_hr_main"
+            sequence="160" />
+
+        <record id="imalive_pension_calendar_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.calendar.search</field>
+            <field name="model">imalive.pension.calendar</field>
+            <field name="arch" type="xml">
+                <search string="Payment Calendars">
+                    <field name="name"/>
+                    <field name="pay_freq"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </search>
+            </field>
+        </record>
+                                       
+        <record id="open_imalive_pension_calendar" model="ir.actions.act_window">
+            <field name="name">Payment Calendar</field>
+            <field name="res_model">imalive.pension.calendar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_calendar_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.calendar.tree</field>
+            <field name="model">imalive.pension.calendar</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Calendar">
+                    <field name="name"/>
+                    <field name="pay_freq"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </tree>
+            </field>
+        </record>
+                          
+        <record id="action_imalive_pension_calendar_tree" model="ir.actions.act_window">
+            <field name="name">Payment Calendar</field>
+            <field name="res_model">imalive.pension.calendar</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="imalive_pension_calendar_tree"/>
+            <field name="search_view_id" ref="imalive_pension_calendar_filter"/>
+        </record>
+        
+        <menuitem
+            id="menu_imalive_pension_calendar"
+            action="open_imalive_pension_calendar"
+            parent="hr.menu_hr_main"
+            sequence="170" groups="im_alive_pension.group_pension_administrator" />
+
+        <record id="imalive_pension_ddebit_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.search</field>
+            <field name="model">imalive.pension.ddebit</field>
+            <field name="arch" type="xml">
+                <search string="Direct Debit Instructions">
+                    <field name="name"/>
+                    <field name="recurrent"/>
+                    <field name="pensioner_id"/>
+                    <field name="recipient_id"/>
+                    <field name="service_id"/>
+                    <field name="amount"/>
+                </search>
+            </field>
+        </record>
+                                       
+        <record id="open_imalive_pension_ddebit" model="ir.actions.act_window">
+            <field name="name">Direct Debit Instruction</field>
+            <field name="res_model">imalive.pension.ddebit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_ddebit_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.tree</field>
+            <field name="model">imalive.pension.ddebit</field>
+            <field name="arch" type="xml">
+                <tree string="Direct Debit Instruction">
+                    <field name="name"/>
+                    <field name="recurrent"/>
+                    <field name="pensioner_id"/>
+                    <field name="calendar_id"/>
+                    <field name="recipient_id"/>
+                    <field name="service_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+                          
+        <record id="action_imalive_pension_ddebit_tree" model="ir.actions.act_window">
+            <field name="name">Direct Debit Instruction</field>
+            <field name="res_model">imalive.pension.ddebit</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="imalive_pension_ddebit_tree"/>
+            <field name="search_view_id" ref="imalive_pension_ddebit_filter"/>
+        </record>
+        
+        <record id="pension_ddebit_form_view" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.form</field>
+            <field name="model">imalive.pension.ddebit</field>
+            <field name="arch" type="xml">
+                <form string="Direct Debit Instruction" version="10.0">
+                    <sheet>
+                        <header>
+                            <button name="ddebit_state_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                            <button name="ddebit_signal_cancel" type="workflow" states="confirm" string="Cancel" class="oe_highlight"/>
+                            <field name="state" widget="statusbar"/>
+                        </header>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="recurrent"/>
+                                <field name="pensioner_id"/>
+                                <field name="calendar_id"/>
+                                <field name="recipient_id"/>
+                                <field name="service_id"/>
+                                <field name="amount" attrs="{'invisible':[('recipient_id', '=', False)],'readonly':[('service_id', '=', True)]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+                
+        <menuitem
+            id="menu_imalive_pension_ddebit"
+            action="open_imalive_pension_ddebit"
+            parent="hr.menu_hr_main"
+            sequence="180" groups="im_alive_pension.group_pension_agent" />
+
+        <record id="imalive_pension_enrollment_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.enrollment.search</field>
+            <field name="model">imalive.pension.enrollment</field>
+            <field name="arch" type="xml">
+                <search string="Enrollment Requests">
+                    <field name="pensioner_id"/>
+                    <field name="state"/>
+                    <field name="date"/>
+                </search>
+            </field>
+        </record>
+                                       
+        <record id="open_imalive_pension_enrollment" model="ir.actions.act_window">
+            <field name="name">Enrollment Request</field>
+            <field name="res_model">imalive.pension.enrollment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_enrollment_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.enrollment.tree</field>
+            <field name="model">imalive.pension.enrollment</field>
+            <field name="arch" type="xml">
+                <tree string="Enrollment Request">
+                    <field name="pensioner_id"/>
+                    <field name="state"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+                          
+        <record id="action_imalive_pension_enrollment_tree" model="ir.actions.act_window">
+            <field name="name">Enrollment Request</field>
+            <field name="res_model">imalive.pension.enrollment</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="imalive_pension_enrollment_tree"/>
+            <field name="search_view_id" ref="imalive_pension_enrollment_filter"/>
+        </record>
+        
+        <record id="pension_enrollment_form_view" model="ir.ui.view">
+            <field name="name">imalive.pension.enrollment.form</field>
+            <field name="model">imalive.pension.enrollment</field>
+            <field name="arch" type="xml">
+                <form string="Enrollment Request" version="10.0">
+                    <sheet>
+                        <header>
+                            <button name="enrollment_signal_confirm" type="workflow" states="draft" string="Confirm" class="oe_highlight"/>
+                            <button name="enrollment_signal_pending" type="workflow" states="confirm" string="Complete" class="oe_highlight"/>
+                            <button name="enrollment_signal_cancel" type="workflow" states="confirm,pending" string="Cancel" class="oe_highlight"/>
+                            <field name="state" widget="statusbar"/>
+                        </header>
+                        <group>
+                            <field name="pensioner_id"/>
+                        </group>
+                        <group>
+                            <field name="name_related" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="sinid" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="mobile_phone" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="gender" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="identification_id" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="hire_date" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="retirement_date" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="bank_account_no" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="title_id" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="bank_id" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                            <field name="date" attrs="{'invisible':[('pensioner_id', '=', False)]}" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+                
+        <menuitem
+            id="menu_imalive_pension_enrollment"
+            action="open_imalive_pension_enrollment"
+            parent="hr.menu_hr_main"
+            sequence="190" groups="im_alive_pension.group_pension_supervisor" />
+
+        <record id="imalive_pension_ddebit_recipient_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.recipient.search</field>
+            <field name="model">imalive.pension.ddebit.recipient</field>
+            <field name="arch" type="xml">
+                <search string="Direct Debit Recipients">
+                    <field name="name"/>
+                    <field name="bank_account_no"/>
+                    <field name="bank_id"/>
+                    <field name="active"/>
+                </search>
+            </field>
+        </record>
+                                       
+        <record id="open_imalive_pension_ddebit_recipient" model="ir.actions.act_window">
+            <field name="name">Direct Debit Recipient</field>
+            <field name="res_model">imalive.pension.ddebit.recipient</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_ddebit_recipient_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.recipient.tree</field>
+            <field name="model">imalive.pension.ddebit.recipient</field>
+            <field name="arch" type="xml">
+                <tree string="Direct Debit Recipient">
+                    <field name="name"/>
+                    <field name="bank_account_no"/>
+                    <field name="bank_id"/>
+                    <field name="pensioner_id"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+                       
+        <record id="pension_ddebit_recipient_form_view" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.recipient.form</field>
+            <field name="model">imalive.pension.ddebit.recipient</field>
+            <field name="arch" type="xml">
+                <form string="Direct Debit Recipient" version="10.0">
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <field name="bank_account_no"/>
+                            <field name="bank_id"/>
+                            <field name="active"/>
+                            <field name="pensioner_id"/>
+                        </group>
+                        <notebook>
+                            <page string="Direct Debit Services">
+                                <field name="dd_services" widget="one2many_list" readonly="0"/>
+                            </page>
+                       </notebook>                    
+                    </sheet>
+                </form>
+            </field>
+        </record>
+                                  
+        <record id="action_imalive_pension_ddebit_recipient_tree" model="ir.actions.act_window">
+            <field name="name">Direct Debit Recipient</field>
+            <field name="res_model">imalive.pension.ddebit.recipient</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="imalive_pension_ddebit_recipient_tree"/>
+            <field name="search_view_id" ref="imalive_pension_ddebit_recipient_filter"/>
+        </record>
+        
+        <menuitem
+            id="menu_imalive_pension_ddebit_recipient"
+            action="open_imalive_pension_ddebit_recipient"
+            parent="hr.menu_hr_main"
+            sequence="170" groups="im_alive_pension.group_pension_administrator" />
+
+        <record id="imalive_pension_ddebit_service_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.service.search</field>
+            <field name="model">imalive.pension.ddebit.service</field>
+            <field name="arch" type="xml">
+                <search string="Direct Debit Services">
+                    <field name="name"/>
+                    <field name="amount"/>
+                    <field name="recipient_id"/>
+                    <field name="active"/>
+                </search>
+            </field>
+        </record>
+                                       
+        <record id="open_imalive_pension_ddebit_service" model="ir.actions.act_window">
+            <field name="name">Direct Debit Service</field>
+            <field name="res_model">imalive.pension.ddebit.service</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_ddebit_service_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.service.tree</field>
+            <field name="model">imalive.pension.ddebit.service</field>
+            <field name="arch" type="xml">
+                <tree string="Direct Debit Service">
+                    <field name="name"/>
+                    <field name="recipient_id"/>
+                    <field name="amount"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+                       
+        <record id="pension_ddebit_service_form_view" model="ir.ui.view">
+            <field name="name">imalive.pension.ddebit.service.form</field>
+            <field name="model">imalive.pension.ddebit.service</field>
+            <field name="arch" type="xml">
+                <form string="Direct Debit Service" version="10.0">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="amount"/>
+                            <field name="active"/>
+                            <field name="recipient_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+                                  
+        <record id="action_imalive_pension_ddebit_service_tree" model="ir.actions.act_window">
+            <field name="name">Direct Debit Service</field>
+            <field name="res_model">imalive.pension.ddebit.service</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="imalive_pension_ddebit_service_tree"/>
+            <field name="search_view_id" ref="imalive_pension_ddebit_service_filter"/>
+        </record>
+        
+        <menuitem
+            id="menu_imalive_pension_ddebit_service"
+            action="open_imalive_pension_ddebit_service"
+            parent="hr.menu_hr_main"
+            sequence="170" groups="im_alive_pension.group_pension_administrator" />
+
+        <record id="imalive_pension_config_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.config.search</field>
+            <field name="model">imalive.pension.config</field>
+            <field name="arch" type="xml">
+                <search string="Application Configuration">
+                    <field name="active"/>
+                    <field name="registration_meth"/>
+                </search>
+            </field>
+        </record>
+                                       
+        <record id="open_imalive_pension_config" model="ir.actions.act_window">
+            <field name="name">Application Configuration</field>
+            <field name="res_model">imalive.pension.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_config_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.config.tree</field>
+            <field name="model">imalive.pension.config</field>
+            <field name="arch" type="xml">
+                <tree string="Application Configuration">
+                    <field name="jitters"/>
+                    <field name="tolerance"/>
+                    <field name="registration_meth"/>
+                    <field name="data_source_internal"/>
+                    <field name="data_source_external"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+                          
+        <record id="action_imalive_pension_config_tree" model="ir.actions.act_window">
+            <field name="name">Application Configuration</field>
+            <field name="res_model">imalive.pension.config</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="imalive_pension_config_tree"/>
+            <field name="search_view_id" ref="imalive_pension_config_filter"/>
+        </record>
+        
+        <record id="pension_config_form_view" model="ir.ui.view">
+            <field name="name">imalive.pension.config.form</field>
+            <field name="model">imalive.pension.config</field>
+            <field name="arch" type="xml">
+                <form string="Application Configuration" version="10.0">
+                    <sheet>
+                        <group>
+                            <field name="jitters" style="width:50%"/>
+                            <field name="tolerance" style="width:50%"/>
+                            <field name="win_length_ms" style="width:50%"/>
+                            <field name="win_shift_ms" style="width:50%"/>
+                            <field name="n_filters" style="width:50%"/>
+                            <field name="n_ceps" style="width:50%"/>
+                            <field name="f_min" style="width:50%"/>
+                            <field name="f_max" style="width:50%"/>
+                            <field name="delta_win" style="width:50%"/>
+                            <field name="pre_emphasis_coef" style="width:50%"/>
+                            <field name="dct_norm" style="width:50%"/>
+                            <field name="mel_scale" style="width:50%"/>
+                            <field name="max_iterations" style="width:50%"/>
+                            <field name="convergence_threshold" style="width:50%"/>
+                            <field name="variance_threshold" style="width:50%"/>
+                            <field name="smoothing_window" style="width:50%"/>
+                            <field name="registration_meth" style="width:50%"/>
+                            <field name="data_source_internal" style="width:50%"/>
+                            <field name="data_source_external" style="width:50%"/>
+                            <field name="active" style="width:50%"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+                
+        <menuitem
+            id="menu_imalive_pension_config"
+            action="open_imalive_pension_config"
+            parent="hr.menu_hr_root"
+            sequence="180" groups="base.group_system" />
+
+        <record id="imalive_pension_disability_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.disability.search</field>
+            <field name="model">imalive.pension.disability</field>
+            <field name="arch" type="xml">
+                <search string="Disability">
+                    <field name="active"/>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+                                       
+        <record id="open_imalive_pension_disability" model="ir.actions.act_window">
+            <field name="name">Disability</field>
+            <field name="res_model">imalive.pension.disability</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="imalive_pension_disability_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.disability.tree</field>
+            <field name="model">imalive.pension.disability</field>
+            <field name="arch" type="xml">
+                <tree string="Disability">
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+                          
+        <record id="action_imalive_pension_disability_tree" model="ir.actions.act_window">
+            <field name="name">Disability</field>
+            <field name="res_model">imalive.pension.disability</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="imalive_pension_disability_tree"/>
+            <field name="search_view_id" ref="imalive_pension_disability_filter"/>
+        </record>
+        
+        <record id="pension_disability_form_view" model="ir.ui.view">
+            <field name="name">imalive.pension.disability.form</field>
+            <field name="model">imalive.pension.disability</field>
+            <field name="arch" type="xml">
+                <form string="Disability" version="10.0">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="imalive_pension_chamsswitch_batch_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.chamsswitch.batch.search</field>
+            <field name="model">imalive.pension.chamsswitch.batch</field>
+            <field name="arch" type="xml">
+                <search string="Search Batch Uploads">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+ 
+        <record id="imalive_pension_chamsswitch_config_filter" model="ir.ui.view">
+            <field name="name">imalive.pension.chamsswitch.config.search</field>
+            <field name="model">imalive.pension.chamsswitch.config</field>
+            <field name="arch" type="xml">
+                <search string="Search Configurations">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+      
+        <record id="imalive_pension_chamsswitch_batch_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.chamsswitch.batch.tree</field>
+            <field name="model">imalive.pension.chamsswitch.batch</field>
+            <field name="arch" type="xml">
+                <tree string="Batch Payments">
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+         
+        <record id="imalive_pension_chamsswitch_config_tree" model="ir.ui.view">
+            <field name="name">imalive.pension.chamsswitch.config.tree</field>
+            <field name="model">imalive.pension.chamsswitch.config</field>
+            <field name="arch" type="xml">
+                <tree string="Configurations">
+                    <field name="name"/>
+                    <field name="url"/>
+                    <field name="http_meth"/>
+                    <field name="testing"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+               
+        <record id="imalive_pension_chamsswitch_batch_form" model="ir.ui.view">
+            <field name="name">imalive.pension.chamsswitch.batch.form</field>
+            <field name="model">imalive.pension.chamsswitch.batch</field>
+            <field name="arch" type="xml">
+                <form string="Chams Switch Batch Payment">
+                    <div class="oe_read_only">
+                        <header>
+                            <button class="oe_highlight" name="send_batch" type="object" states="approved" string="Send"/>
+                            <button name="confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                            <button name="approve" type="object" states="confirm" string="Complete" class="oe_highlight"/>
+                            <button name="cancel" type="object" states="confirm" string="Cancel" class="oe_highlight"/>
+                            <field name="state" widget="statusbar" statusbar_colors="{'draft':'red','confirm':'red','closed':'approved'}"/>
+                        </header>
+                    </div>
+                    <sheet>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <notebook>
+                            <page string="Payments">
+                                <field name="payment_ids" widget="one2many_list" readonly="1">
+                                    <tree>
+                                        <field name="serial_no"/>
+                                        <field name="employee_id"/>
+                                        <field name="amount"/>
+                                        <field name="state"/>
+                                    </tree>                                  
+                                </field>
+                            </page>
+                       </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>        
+               
+        <record id="imalive_pension_chamsswitch_config_form" model="ir.ui.view">
+            <field name="name">imalive.pension.chamsswitch.config.form</field>
+            <field name="model">imalive.pension.chamsswitch.config</field>
+            <field name="arch" type="xml">
+                <form string="Chams Switch Config">
+                    <sheet>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <field name="url"/>
+                            <field name="http_meth"/>
+                            <field name="user"/>
+                            <field name="passwd"/>
+                            <field name="testing"/>
+                            <field name="test_content"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>        
+                  
+        <record id="action_imalive_pension_chamsswitch_batch_tree" model="ir.actions.act_window">
+            <field name="name">ChamsSwitch Payments</field>
+            <field name="res_model">imalive.pension.chamsswitch.batch</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="imalive_pension_chamsswitch_batch_tree"/>
+            <field name="search_view_id" ref="imalive_pension_chamsswitch_batch_filter"/>
+        </record>
+                  
+        <record id="action_imalive_pension_chamsswitch_config_tree" model="ir.actions.act_window">
+            <field name="name">ChamsSwitch Config</field>
+            <field name="res_model">imalive.pension.chamsswitch.config</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="imalive_pension_chamsswitch_config_tree"/>
+            <field name="search_view_id" ref="imalive_pension_chamsswitch_config_filter"/>
+        </record>
+        
+        <menuitem 
+            action="action_imalive_pension_chamsswitch_config_tree" 
+            id="menu_imalive_pension_chamsswitch_config" 
+            parent="hr.menu_hr_root" 
+            sequence="150"/>
+        
+        <menuitem 
+            action="action_imalive_pension_chamsswitch_batch_tree" 
+            id="menu_imalive_pension_chamsswitch_batch" 
+            parent="hr.menu_hr_root" 
+            sequence="160"/>
+                                        
+        <menuitem
+            id="menu_imalive_pension_disability"
+            action="open_imalive_pension_disability"
+            parent="hr.menu_hr_root"
+            sequence="180" 
+            groups="base.group_system" />                                                                                                                
+    </data>
+</odoo>        

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        
+                <!-- Workflow Definition -->
+        <record id="wkf_payment" model="workflow">
+            <field name="name">imalive.pension.payment.basic</field>
+            <field name="osv">imalive.pension.payment</field>
+            <field name="on_create">True</field>
+        </record>
+        
+        <!-- Workflow Activities (States) -->
+        
+        <record id="payment_act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_payment"/>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state': 'draft'})</field>
+            <field name="flow_start">True</field>
+        </record>
+        
+        <record id="payment_act_confirm" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_payment"/>
+            <field name="name">confirm</field>
+            <field name="kind">function</field>
+            <field name="action">payment_state_confirm()</field>
+        </record>
+        
+        <record id="payment_act_pending" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_payment"/>
+            <field name="name">pending</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state': 'pending'})</field>
+        </record>
+        
+        <record id="payment_act_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_payment"/>
+            <field name="name">done</field>
+            <field name="kind">function</field>
+            <field name="action">payment_state_done()</field>
+            <field name="flow_stop">True</field>
+        </record>
+        
+        <record id="payment_act_cancel" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_payment"/>
+            <field name="name">cancel</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state': 'cancel'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+        
+        <!-- Workflow Transitions -->
+        
+        <record id="payment_draft2confirm" model="workflow.transition">
+            <field name="act_from" ref="payment_act_draft"/>
+            <field name="act_to" ref="payment_act_confirm"/>
+            <field name="signal">payment_signal_confirm</field>
+            <field name="group_id" ref="im_alive_pension.group_pension_administrator"/>
+        </record>
+        
+        <record id="payment_confirm2pending" model="workflow.transition">
+            <field name="act_from" ref="payment_act_confirm"/>
+            <field name="act_to" ref="payment_act_pending"/>
+            <field name="condition">not effective_date_in_future()</field>
+            <field name="signal">payment_signal_pending</field>
+            <field name="group_id" ref="im_alive_pension.group_pension_administrator"/>
+        </record>
+        
+        <record id="payment_confirm2done" model="workflow.transition">
+            <field name="act_from" ref="payment_act_confirm"/>
+            <field name="act_to" ref="payment_act_done"/>
+            <field name="condition">not effective_date_in_future()</field>
+            <field name="signal">payment_signal_pending</field>
+            <field name="group_id" ref="im_alive_pension.group_pension_administrator"/>
+        </record>
+        
+        <record id="payment_confirm2cancel" model="workflow.transition">
+            <field name="act_from" ref="payment_act_confirm"/>
+            <field name="act_to" ref="payment_act_cancel"/>
+            <field name="signal">payment_signal_cancel</field>
+            <field name="group_id" ref="im_alive_pension.group_pension_administrator"/>
+        </record>
+        
+        <record id="payment_pending2done" model="workflow.transition">
+            <field name="act_from" ref="payment_act_pending"/>
+            <field name="act_to" ref="payment_act_done"/>
+            <field name="condition">not effective_date_in_future()</field>
+            <field name="signal">payment_signal_done</field>
+            <field name="group_id" ref="im_alive_pension.group_pension_administrator"/>
+        </record>
+        
+        <record id="payment_pending2cancel" model="workflow.transition">
+            <field name="act_from" ref="payment_act_pending"/>
+            <field name="act_to" ref="payment_act_cancel"/>
+            <field name="signal">payment_signal_cancel</field>
+            <field name="group_id" ref="im_alive_pension.group_pension_administrator"/>
+        </record>
+
+    </data>
+</openerp>
